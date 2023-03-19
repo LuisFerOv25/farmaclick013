@@ -39,7 +39,7 @@ app.secret_key = '97110c78ae51a45af397be6534caef90ebb9b1dcb3380af008f90b23a5d161
 import os
 import babel.dates
 
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'app/static/uploads'
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -133,7 +133,7 @@ def registrar_producto():
     if imagen and allowed_file(imagen.filename):
         filename = secure_filename(imagen.filename)
         
-        imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
+        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         imagename = filename
     controller.insertar_producto(nombre, descripcion, cantidad, precio,proveedor,fecha_vencimiento,imagename,categoria)
     # De cualquier modo, y si todo fue bien, redireccionar
@@ -976,7 +976,7 @@ def actualizar_producto():
     if imagen and allowed_file(imagen.filename):
         filename = secure_filename(imagen.filename)
         
-        imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
+        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         imagename = filename    
     controller.actualizar_producto(nombre, descripcion,cantidad ,precio,fecha_vencimiento,imagename,id_producto )
     return render_template("home.html",dataLogin= dataLoginSesion(),**dict(translations.items()))
@@ -1037,7 +1037,7 @@ def actualizar_usuario():
     if imagen and allowed_file(imagen.filename):
         filename = secure_filename(imagen.filename)
         
-        imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
+        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         imagename = filename
     controller.actualizar_usuario(nombre, apellido, correo,direccion,telefono,genero,imagename,id)
     return render_template("home.html",dataLogin= dataLoginSesion(),**dict(translations.items()))
@@ -1117,7 +1117,7 @@ def registerUserr():
             if imagen and allowed_file(imagen.filename):
                 filename = secure_filename(imagen.filename)
                 
-                rut= imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
+                rut= imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 imagename = str(UPLOAD_FOLDER+'/'+filename)           
             cursor.execute('INSERT INTO usuario (tipo_user, nombre, apellido, correo,direccion,telefono, password,genero, create_at,imagen) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (tipo_user, nombre, apellido, correo, direccion,telefono, password_encriptada, genero, create_at,imagename))
             conexion.commit()
