@@ -110,7 +110,7 @@
     {% for resultado in resultados %}
     <div class="col">
       <div class="card h-100">
-        <img src="/static/img/medicamentos/amitriptilina.png" class="card-img-top" alt="...">
+        <img src={{ url_for('static', filename='uploads/' + dato[7]) }} id="itemImage" alt='img'/>
         <div class="card-body">
           <h5 class="card-title">{{resultado[1]}}</h5>
 
