@@ -39,7 +39,7 @@ app.secret_key = '97110c78ae51a45af397be6534caef90ebb9b1dcb3380af008f90b23a5d161
 import os
 import babel.dates
 
-UPLOAD_FOLDER = 'app/static/uploads'
+UPLOAD_FOLDER = '/app/static/uploads'
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -1678,8 +1678,14 @@ def pasarelacompra():
     query = "INSERT INTO pedido (nombre, apellido, telefono, correo, direccion, ciudad, departamento, pais, estado,id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     values = (nombre, apellido, telefono, correo, direccion, ciudad, departamento, pais, estado,id_user)
     cursor.execute(query, values)
+
+    
+    cursor.execute("DELETE FROM carrito WHERE id = %s", (id_user,))
     conexion.commit()
     return render_template('checkout.html',id_user=id_user)
+    
+
+
 
 #/////////////////
 
@@ -1981,8 +1987,6 @@ for code in error_codes:
     def client_error(error):
         return render_template('error.html', error=error), error.code
 
-#/////////////////
-if __name__ == '__main__':
-    app.run(debug=True, port=5913)
+
 
 
