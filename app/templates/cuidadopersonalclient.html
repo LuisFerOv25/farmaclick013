@@ -1,0 +1,42 @@
+{% extends '/base_cliente_registrado.html' %}
+{% block title %}Cuidado Personal{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for dato in productos %}
+    <div class="col">
+      <div class="card h-100">
+
+        <img src={{url_for( 'static' , filename='uploads/' + dato[7]) }} class="card-img-top" alt="Imagen Producto">
+  
+        <div class="card-body">
+          <h5 class="card-title">{{dato[1]}}</h5>
+
+          <p class="card-text">{{dato[2]}}</p>
+          <h4 class="precios" style="color: orangered;">{{dato[4]}}</h4>
+          <div class="centrarButton" align="center">
+            <a class="btn btn-primary  btn-sm" href="/comprarproducto?productId={{dato[0]}}" role="button">Comprar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Paginacion -->
+  <div class="py-4">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% for pag in range(1,11) %}
+        <li class="page-item">
+          <a class="page-link" href="/pag_cuidado_personal/{{pag}}">{{ pag }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+  <hr>
+</div>
+
+{% endblock %}
