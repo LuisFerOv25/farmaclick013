@@ -1298,23 +1298,6 @@ def login():
 def registro():
     return render_template("registro.html")
 
-@app.route('/recuperar_correo/')
-def recuperarc():
-    return render_template("cuenta.html")
-
-
-
-@app.route('/verificar/')
-def verificar():
-    return render_template("cuenta2.html")
-
-@app.route('/validar/')
-def validar():
-    return render_template("cuenta3.html")
-
-
-
-
 #Registrando una cuenta de Usuario
 @app.route('/registro-usuario', methods=['GET', 'POST'])
 def registerUser():
