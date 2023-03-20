@@ -93,8 +93,8 @@ def home_admin():
     
     
     admin = controller.user_cant_admin()
-    app = controller.user_cant_client()
-    return render_template("home.html", admin=admin,app=app,dataLogin= dataLoginSesion(),
+    cliente = controller.user_cant_client()
+    return render_template("home.html", admin=admin,cliente=cliente,dataLogin= dataLoginSesion(),
                            **dict(translations.items()))    
 
 
