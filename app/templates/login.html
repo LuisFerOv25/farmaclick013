@@ -12,18 +12,19 @@
         <h1>{{txtlogin}}</h1>
         <br>
         <br>
-        <input type="email" name="correo" id="correo" placeholder= {{plhcorr}} >
-        <input type="password" name="password" id="password" placeholder= {{plhpass}}>
+        <input type="email" name="correo" id="correo" placeholder={{plhcorr}}>
+        <input type="password" name="password" id="password" placeholder={{plhpass}}>
 
 
         <!-- <button>Acceder</button> -->
+        <br>
         <button type="submit" class="btn btn-primary btn-send">{{txtlogin}}</button>
 
       </form>
     </div>
     <div class="form-container sign-in-container">
-      <form name="formRegisterClient" id="formRegisterClient" action="{{ url_for('registerUser') }}"
-        method="POST" autocomplete="off">
+      <form name="formRegisterClient" id="formRegisterClient" action="{{ url_for('registerUser') }}" method="POST"
+        autocomplete="off">
 
         <input type="text" name="nombre" autofocus placeholder={{plhnom}}>
         <input type="text" name="apellido" placeholder={{plhape}}>

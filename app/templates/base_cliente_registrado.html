@@ -30,7 +30,7 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
           <div class="dropdown">
-            <a href="/"
+            <a href="/homecliente"
               class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
               <img src="/static/icons/pharmacy.png" width="50" height="50" alt="">
               <span class="fs-5">FARMACLICK</span>
@@ -39,7 +39,8 @@
 
           <div class="mx-auto" role="search">
             <form class="d-flex" role="search" action="{{ url_for('buscar') }}" method="post">
-              <input type="text" name="busqueda" class="form-control" placeholder="Buscar Medicamento" aria-label="Search">
+              <input type="text" name="busqueda" class="form-control" placeholder="Buscar Medicamento"
+                aria-label="Search">
               <button type="submit">Buscar</button>
             </form>
           </div>
@@ -64,9 +65,10 @@
             </div>
           </div>
 
-          <div id="carrito" >
+          <div id="carrito">
             <a href="/carrito" class=" link-dark" aria-expanded="false">
-              <img src={{url_for('static', filename='icons/shoppingCar.png')}} id="cartIcon" width="40" height="40" class="rounded-circle"/>
+              <img src={{url_for('static', filename='icons/shoppingCar.png' )}} id="cartIcon" width="40" height="40"
+                class="rounded-circle" />
               CART {{noOfItems}}
             </a>
           </div>
@@ -81,15 +83,11 @@
   <div class="container">
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-between ">
-        <a class="p-2 link-secondary text-decoration-none"
-          href="{{ url_for('medicamentoscliente') }}">Medicamentos</a>
-        <a class=" p-2 link-secondary text-decoration-none"
-          href="{{ url_for('cuidadopersonalclient') }}">Cuidado
+        <a class="p-2 link-secondary text-decoration-none" href="{{ url_for('medicamentoscliente') }}">Medicamentos</a>
+        <a class=" p-2 link-secondary text-decoration-none" href="{{ url_for('cuidadopersonalclient') }}">Cuidado
           Personal</a>
-        <a class=" p-2 link-secondary text-decoration-none"
-          href="{{ url_for('dermacosmetica') }}">Dermacosmética</a>
-        <a class=" p-2 link-secondary text-decoration-none"
-          href="{{ url_for('nutricionales') }}">Nutricionales</a>
+        <a class=" p-2 link-secondary text-decoration-none" href="{{ url_for('dermacosmetica') }}">Dermacosmética</a>
+        <a class=" p-2 link-secondary text-decoration-none" href="{{ url_for('nutricionales') }}">Nutricionales</a>
         <a class=" p-2 link-secondary text-decoration-none" href="{{ url_for('bebemed') }}">Bebé</a>
       </nav>
     </div>
@@ -97,166 +95,165 @@
 
   {% block content %}{% endblock %}
 
-<!-- Contenido -->
-{% if mensaje %}
-<br>
-<br>
-<p class='text-center'>{{ mensaje }}</p>
-<br>
-<br>
-{% endif %}
-<div class="container">
-  <div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for resultado in resultados %}
-    <div class="col">
-      <div class="card h-100">
-        <img src={{ url_for('static', filename='uploads/' + resultado[7]) }} id="itemImage" alt='img'/>
-        <div class="card-body">
-          <h5 class="card-title">{{resultado[1]}}</h5>
-
-          <p class="card-text">{{resultado[2]}}</p>
-          <h4 class="precios" style="color: orangered;">{{resultado[4]}}</h4>
-          <div class="centrarButton" align="center">
-            <a class="btn btn-primary  btn-sm" href="{{ url_for('comprarproducto') }}" role="button">Comprar</a>
+  <!-- Contenido -->
+  {% if mensaje %}
+  <br>
+  <br>
+  <p class='text-center'>{{ mensaje }}</p>
+  <br>
+  <br>
+  {% endif %}
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for resultado in resultados %}
+      <div class="col">
+        <div class="card h-100">
+          <img src={{ url_for('static', filename='uploads/' + resultado[7]) }} id="itemImage" alt='img' />
+          <div class="card-body">
+            <h5 class="card-title">{{resultado[1]}}</h5>
+            <p class="card-text">{{resultado[2]}}</p>
+            <h4 class="precios" style="color: orangered;">{{resultado[4]}}</h4>
+            <div class="centrarButton" align="center">
+              <a class="btn btn-primary  btn-sm" href="/agregar?productId={{resultado[0]}}" role="button">Comprar</a>
+            </div>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 
-  <footer class="text-center text-lg-start bg-white text-muted">
+    <footer class="text-center text-lg-start bg-white text-muted">
 
-    <!-- Section: Social media -->
+      <!-- Section: Social media -->
 
-    <!-- Section: Links  -->
-    <section class="">
-      <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
-        <div class="row mt-3">
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              <i class="fas fa-capsules me-3 text-secondary"></i>FarmaClick
+      <!-- Section: Links  -->
+      <section class="">
+        <div class="container text-center text-md-start mt-5">
+          <!-- Grid row -->
+          <div class="row mt-3">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+              <!-- Content -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                <i class="fas fa-capsules me-3 text-secondary"></i>FarmaClick
 
-            </h6>
-            <p>
-              Descubre la comodidad de cuidar tu salud desde casa con FarmaClick
-            </p>
+              </h6>
+              <p>
+                Descubre la comodidad de cuidar tu salud desde casa con FarmaClick
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                Nosotros
+              </h6>
+              <p>
+                <a href="#!" class="text-reset">¿Quiénes somos?</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Preguntas Frecuentes</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Políticas y Términos de Uso</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Políticas de Envíos</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Trabaja con nosotros</a>
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                Enlaces de interés
+              </h6>
+              <p>
+                <a href="#!" class="text-reset">Superintendencia de industria y comercio
+                </a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Superintendencia financiera</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Cómo hacer un pedido en TDV</a>
+              </p>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">Contáctenos</h6>
+              <p><i class="fas fa-home me-3 text-secondary"></i> Ipiales Nariño, CALLE 234A</p>
+              <p>
+                <i class="fas fa-envelope me-3 text-secondary"></i>
+                farmaclick@farma.com.co
+              </p>
+              <p><i class="fas fa-phone me-3 text-secondary"></i> + 57 3217655433</p>
+              <p><i class="fas fa-print me-3 text-secondary"></i> + 57 3146785432</p>
+            </div>
+            <!-- Grid column -->
           </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Nosotros
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">¿Quiénes somos?</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Preguntas Frecuentes</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Políticas y Términos de Uso</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Políticas de Envíos</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Trabaja con nosotros</a>
-            </p>
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Enlaces de interés
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Superintendencia de industria y comercio
-              </a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Superintendencia financiera</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Cómo hacer un pedido en TDV</a>
-            </p>
-
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Contáctenos</h6>
-            <p><i class="fas fa-home me-3 text-secondary"></i> Ipiales Nariño, CALLE 234A</p>
-            <p>
-              <i class="fas fa-envelope me-3 text-secondary"></i>
-              farmaclick@farma.com.co
-            </p>
-            <p><i class="fas fa-phone me-3 text-secondary"></i> + 57 3217655433</p>
-            <p><i class="fas fa-print me-3 text-secondary"></i> + 57 3146785432</p>
-          </div>
-          <!-- Grid column -->
+          <!-- Grid row -->
         </div>
-        <!-- Grid row -->
-      </div>
-    </section>
-    <!-- Section: Links  -->
+      </section>
+      <!-- Section: Links  -->
 
-    <!-- Section: Social media -->
-    <section class="d-flex justify-content-center justify-content-lg-center p-5 border-bottom">
-      <!-- Left -->
-      <div class="d-flex justify-content-center">
-        <div class="me-5 d-none d-lg-block">
-          <span>Síguenos en nuestras redes sociales</span>
+      <!-- Section: Social media -->
+      <section class="d-flex justify-content-center justify-content-lg-center p-5 border-bottom">
+        <!-- Left -->
+        <div class="d-flex justify-content-center">
+          <div class="me-5 d-none d-lg-block">
+            <span>Síguenos en nuestras redes sociales</span>
+          </div>
         </div>
+        <div>
+          <a href="" class="me-4 link-secondary">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="" class="me-4 link-secondary">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="" class="me-4 link-secondary">
+            <i class="fab fa-google"></i>
+          </a>
+          <a href="" class="me-4 link-secondary">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="" class="me-4 link-secondary">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="" class="me-4 link-secondary">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+        <!-- Right -->
+      </section>
+
+      <!-- Copyright -->
+      <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+        © 2023 Copyright.
+        <a class="text-reset fw-bold">Todos los derechos reservados</a>
       </div>
-      <div>
-        <a href="" class="me-4 link-secondary">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="" class="me-4 link-secondary">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="" class="me-4 link-secondary">
-          <i class="fab fa-google"></i>
-        </a>
-        <a href="" class="me-4 link-secondary">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="" class="me-4 link-secondary">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="" class="me-4 link-secondary">
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
-      <!-- Right -->
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+    ></section>
+
     </section>
 
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-      © 2023 Copyright.
-      <a class="text-reset fw-bold">Todos los derechos reservados</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
-  ></section>
-
-  </section>
-
-  <script type="text/javascript" src="/static/js/login.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
 
 </body>
 

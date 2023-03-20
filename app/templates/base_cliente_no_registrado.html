@@ -38,7 +38,7 @@
           </div>
 
           <div class="mx-auto" role="search">
-            <form class="d-flex" role="search" action="{{ url_for('buscar') }}" method="post">
+            <form class="d-flex" role="search" action="{{ url_for('buscarN') }}" method="post">
               <input type="text" name="busqueda" class="form-control" placeholder="Buscar Medicamento"
                 aria-label="Search">
               <button type="submit">Buscar</button>
@@ -70,7 +70,30 @@
 
   {% block content %}{% endblock %}
 
-
+  {% if mensaje %}
+  <br>
+  <br>
+  <p class='text-center'>{{ mensaje }}</p>
+  <br>
+  <br>
+  {% endif %}
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for resultado in resultados %}
+    <div class="col">
+      <div class="card h-100">
+        <img src={{ url_for('static', filename='uploads/' + resultado[7]) }} id="itemImage" alt='img' />
+        <div class="card-body">
+          <h5 class="card-title">{{resultado[1]}}</h5>
+          <p class="card-text">{{resultado[2]}}</p>
+          <h4 class="precios" style="color: orangered;">{{resultado[4]}}</h4>
+          <div class="centrarButton" align="center">
+            <a class="btn btn-primary  btn-sm" href="/login" role="button">Comprar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
   <footer class="text-center text-lg-start bg-white text-muted">
 
     <!-- Section: Social media -->

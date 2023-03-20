@@ -39,7 +39,7 @@ app.secret_key = '97110c78ae51a45af397be6534caef90ebb9b1dcb3380af008f90b23a5d161
 import os
 import babel.dates
 
-UPLOAD_FOLDER = '/app/static/uploads'
+UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -133,7 +133,7 @@ def registrar_producto():
     if imagen and allowed_file(imagen.filename):
         filename = secure_filename(imagen.filename)
         
-        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
         imagename = filename
     controller.insertar_producto(nombre, descripcion, cantidad, precio,proveedor,fecha_vencimiento,imagename,categoria)
     # De cualquier modo, y si todo fue bien, redireccionar
@@ -976,7 +976,7 @@ def actualizar_producto():
     if imagen and allowed_file(imagen.filename):
         filename = secure_filename(imagen.filename)
         
-        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
         imagename = filename    
     controller.actualizar_producto(nombre, descripcion,cantidad ,precio,fecha_vencimiento,imagename,id_producto )
     return render_template("home.html",dataLogin= dataLoginSesion(),**dict(translations.items()))
@@ -1037,7 +1037,7 @@ def actualizar_usuario():
     if imagen and allowed_file(imagen.filename):
         filename = secure_filename(imagen.filename)
         
-        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
         imagename = filename
     controller.actualizar_usuario(nombre, apellido, correo,direccion,telefono,genero,imagename,id)
     return render_template("home.html",dataLogin= dataLoginSesion(),**dict(translations.items()))
@@ -1117,7 +1117,7 @@ def registerUserr():
             if imagen and allowed_file(imagen.filename):
                 filename = secure_filename(imagen.filename)
                 
-                rut= imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                rut= imagen.save(os.path.join(config['UPLOAD_FOLDER'], filename))
                 imagename = str(UPLOAD_FOLDER+'/'+filename)           
             cursor.execute('INSERT INTO usuario (tipo_user, nombre, apellido, correo,direccion,telefono, password,genero, create_at,imagen) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (tipo_user, nombre, apellido, correo, direccion,telefono, password_encriptada, genero, create_at,imagename))
             conexion.commit()
@@ -1678,14 +1678,8 @@ def pasarelacompra():
     query = "INSERT INTO pedido (nombre, apellido, telefono, correo, direccion, ciudad, departamento, pais, estado,id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     values = (nombre, apellido, telefono, correo, direccion, ciudad, departamento, pais, estado,id_user)
     cursor.execute(query, values)
-
-    
-    cursor.execute("DELETE FROM carrito WHERE id = %s", (id_user,))
     conexion.commit()
     return render_template('checkout.html',id_user=id_user)
-    
-
-
 
 #/////////////////
 
@@ -1740,27 +1734,6 @@ def medicamentoscliente():
 @app.route('/datoscliente/')
 def datoscliente():
     return render_template('datoscliente.html', dataLogin= dataLoginSesion())
-
-
-# Comprar producto
-@app.route('/comprarproducto/')
-def comprarproducto():
-    noOfItems = 0
-    conexion = obtener_conexion()
-    correo = session['correo']
-    cursor = conexion.cursor()
-    cursor.execute("SELECT id FROM usuario WHERE correo = %s", (correo,))
-    userId = cursor.fetchone()[0]
-    cursor.fetchall()
-    cursor.execute("SELECT count(id_producto) FROM carrito WHERE id = %s", (userId, ))
-    noOfItems = cursor.fetchone()[0] 
-
-    productId = request.args.get('id_producto')
-    with conexion.cursor() as cursor:
-        cursor.execute('SELECT id_producto, nombre, descripcion,cantidad, precio, proveedor,fecha_vencimiento, imagen, categoria stock FROM producto WHERE id_producto = %s', (productId, ))
-        productData = cursor.fetchone() 
-    conexion.close()
-    return render_template("comprarproducto.html",noOfItems=noOfItems,productData=productData,productId=productId)
 
 # Cuidado personal
 @app.route('/cuidadopersonalclient/')
@@ -1978,6 +1951,34 @@ def buscar():
     return render_template('base_cliente_registrado.html')
 
 
+
+@app.route('/buscarN', methods=['GET', 'POST'])
+def buscarN():
+    if request.method == 'POST':
+        # Obtener el término de búsqueda del usuario
+        busqueda = request.form['busqueda']
+        
+        # Crear una consulta para buscar en la base de datos
+        conexion = obtener_conexion()
+        cursor = conexion.cursor()
+        consulta = "SELECT * FROM producto WHERE nombre LIKE '%{}%'".format(busqueda)
+        cursor.execute(consulta)
+        
+        # Obtener los resultados de la consulta
+        resultados = cursor.fetchall()
+        
+        if len(resultados) == 0:
+            # Si no se encontraron resultados, mostrar un mensaje
+            mensaje = "No se encontraron productos para '{}'. Intente con otra búsqueda.".format(busqueda)
+            return render_template('base_cliente_no_registrado.html', mensaje=mensaje)
+        else:
+            # Si se encontraron resultados, mostrarlos
+            return render_template('base_cliente_no_registrado.html', resultados=resultados)
+    
+    # Si la solicitud es GET, mostrar la página de búsqueda
+    return render_template('base_cliente_no_registrado.html')
+
+
 error_codes = [
     400, 401, 403, 404, 405, 406, 408, 409, 410, 411, 412, 413, 414, 415,
     416, 417, 418, 422, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505
@@ -1987,6 +1988,8 @@ for code in error_codes:
     def client_error(error):
         return render_template('error.html', error=error), error.code
 
-
+#/////////////////
+if __name__ == '__main__':
+    app.run(debug=True, port=5913)
 
 

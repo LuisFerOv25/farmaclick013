@@ -43,11 +43,11 @@
         <li class="list-group-item  lh-sm">
           <div class="text-center">
             <h6 class="my-0">
-              {% if row[4] == 0%}
+              {% if row[5] == 0%}
               <a href="/eliminar?productId={{row[1]}}" class="btn btn-warning">Descartar</a>
-              {% elif row[4] != 0%}
+              {% elif row[5] != 0%}
               <a href="/eliminar?productId={{row[1]}}" class="btn btn-danger">Disminuir</a>
-              {% elif row[1] == None%}
+              {% elif row[5] == None%}
               <p class='text-center'> Aun no has añadido productos al carrito</p>
               {% endif %}
             </h6>
